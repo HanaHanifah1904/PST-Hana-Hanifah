@@ -61,9 +61,14 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-center">
-                            @if($item->foto)
-                            <img src="{{ asset('storage/' . $item->foto) }}" class="img-fluid" alt="Foto Tentang Kami">
-                            @endif
+                        @if($item->foto)
+    <img src="{{ asset('storage/' . $item->foto) }}" 
+         alt="Foto Tentang Kami" 
+         class="img-fluid rounded" 
+         style="max-height: 250px; object-fit: cover;">
+@else
+    <p class="text-muted fst-italic">Tidak ada foto</p>
+@endif
                         </div>
                     </div>
                 </div>

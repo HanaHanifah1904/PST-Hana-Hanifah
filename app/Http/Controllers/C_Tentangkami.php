@@ -32,9 +32,9 @@ class C_TentangKami extends Controller
             $file = $request->file('foto');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('uploads/tentangkami', $filename, 'public');
-            $data['foto'] = 'storage/uploads/tentangkami/' . $filename;
+            $data['foto'] = 'uploads/tentangkami/' . $filename; // tanpa 'storage/' di sini
         }
-
+        
         M_TentangKami::create($data);
 
         return redirect()->back()->with('success', 'Data Tentang Kami berhasil disimpan!');
@@ -67,14 +67,14 @@ class C_TentangKami extends Controller
             $file = $request->file('foto');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('uploads/tentangkami', $filename, 'public');
-            $data['foto'] = 'uploads/tentangkami/' . $filename; // ✅ BENAR
-
+            $data['foto'] = 'uploads/tentangkami/' . $filename;
+        
             // Hapus foto lama
-            if ($item->foto && file_exists(public_path($item->foto))) {
-                unlink(public_path($item->foto));
+            if ($item->foto && file_exists(storage_path('app/public/' . $item->foto))) {
+                unlink(storage_path('app/public/' . $item->foto));
             }
         }
-
+        
         $item->update($data);
 
         return redirect()->route('tentangkami.index')->with('success', 'Data berhasil diperbarui!');
@@ -85,10 +85,10 @@ class C_TentangKami extends Controller
     {
         $item = M_TentangKami::findOrFail($id);
 
-        if ($item->foto && file_exists(public_path($item->foto))) {
-            unlink(public_path($item->foto));
+        if ($item->foto && file_exists(storage_path('app/public/' . $item->foto))) {
+            unlink(storage_path('app/public/' . $item->foto));
         }
-
+    
         $item->delete();
 
         return redirect()->route('tentangkami.index')->with('success', 'Data berhasil dihapus!');
