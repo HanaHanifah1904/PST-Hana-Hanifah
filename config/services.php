@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'nocaptca' => [
+        'sitekey' => env('NOCAPTCA_SITEKEY'),
+        'secret' => env('NOCAPTCA_SECRET')
+    ],
 ];

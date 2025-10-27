@@ -20,8 +20,11 @@ class C_Tim extends Controller
 
     public function store(Request $request)
     {
+       
         $request->validate([
             'Kelompok_Petugas' => 'required|string|max:100',
+        ], [
+            'Kelompok_Petugas.required' => 'Kelompok Petugas wajib dipilih.',
         ]);
 
         M_Tim::create([

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Form Pengaduan - Gacor Edition</title>
+    <title>Form Pengaduan</title>
     <style>
         /* Reset */
         * {
@@ -290,31 +290,50 @@
             </div>
         @endif
 
-        <form action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
-            @csrf
-            <label for="Nama">Nama Lengkap</label>
-            <input type="text" id="Nama" name="Nama" placeholder="Masukkan nama lengkap" value="{{ old('Nama') }}" required autofocus />
+        <form action="{{ route('form.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+        @csrf
+        <label for="Nama">Nama Lengkap</label>
+        <input type="text" id="Nama" name="Nama" value="{{ old('Nama') }}" />
+        @error('Nama')
+            <small style="color:red;">{{ $message }}</small>
+        @enderror
 
-            <label for="Alamat">Alamat <small style="font-weight: normal; font-size: 0.85rem; color: #666;"></small></label>
-            <textarea id="Alamat" name="Alamat" placeholder="Masukkan alamat singkat Anda" required>{{ old('Alamat') }}</textarea>
+        <label for="Alamat">Alamat</label>
+        <textarea id="Alamat" name="Alamat">{{ old('Alamat') }}</textarea>
+        @error('Alamat')
+            <small style="color:red;">{{ $message }}</small>
+        @enderror
 
-            <label for="No_HP">Nomor HP</label>
-            <input type="tel" id="No_HP" name="No_HP" placeholder="Contoh: 081234567890" value="{{ old('No_HP') }}" pattern="[0-9]{10,15}" required />
+        <label for="No_HP">Nomor HP</label>
+        <input type="tel" id="No_HP" name="No_HP" value="{{ old('No_HP') }}" />
+        @error('No_HP')
+            <small style="color:red;">{{ $message }}</small>
+        @enderror
 
-            <label for="Tanggal">Tanggal</label>
-            <input type="date" id="Tanggal" name="Tanggal" value="{{ old('Tanggal') }}" required />
+        <label for="Tanggal">Tanggal</label>
+        <input type="date" id="Tanggal" name="Tanggal" value="{{ old('Tanggal') }}" />
+        @error('Tanggal')
+            <small style="color:red;">{{ $message }}</small>
+        @enderror
 
-            <label for="Pengaduan">Pengaduan</label>
-            <textarea id="Pengaduan" name="Pengaduan" placeholder="Tuliskan pengaduan Anda secara lengkap" required>{{ old('Pengaduan') }}</textarea>
+        <label for="Pengaduan">Pengaduan</label>
+        <textarea id="Pengaduan" name="Pengaduan">{{ old('Pengaduan') }}</textarea>
+        @error('Pengaduan')
+            <small style="color:red;">{{ $message }}</small>
+        @enderror
 
-            <label for="Foto_Pengaduan">Foto Pendukung</label>
-            <input type="file" id="Foto_Pengaduan" name="Foto_Pengaduan" accept="image/*" />
+        <label for="Foto_Pengaduan">Foto Pendukung</label>
+        <input type="file" id="Foto_Pengaduan" name="Foto_Pengaduan" accept="image/*" />
+        @error('Foto_Pengaduan')
+            <small style="color:red;">{{ $message }}</small>
+        @enderror
 
-            <div class="button-container">
-                <button type="submit" class="btn-submit">Kirim Pengaduan</button>
-                <a href="{{ url()->previous() }}" class="btn-back" role="button">Kembali</a>
-            </div>
-        </form>
+    <div class="button-container">
+        <button type="submit" class="btn-submit">Kirim Pengaduan</button>
+        <a href="{{ url()->previous() }}" class="btn-back" role="button">Kembali</a>
+    </div>
+</form>
+
     </div>
 
     <script>

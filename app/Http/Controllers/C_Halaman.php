@@ -1,19 +1,21 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\M_LaporanP;
-use App\Models\M_Pengaduan; // <- tambahkan ini
+use App\Models\M_Dokumentasi;
+use App\Models\M_Portofolio;
+use App\Models\M_TentangKami;
 
 class C_Halaman extends Controller
 {
     public function index()
     {
-        $laporan = M_LaporanP::orderBy('tanggal', 'desc')->get();
+        $dokumentasi = M_Dokumentasi::latest()->get();
+        $portofolio  = M_Portofolio::latest()->get();
+        $tentangKami = M_TentangKami::latest()->first() ?? null;
 
-        $pengaduanTerbaru = M_Pengaduan::orderBy('Nama', 'desc')->take(5)->get();
-
-        return view('v_halaman', compact('pengaduanTerbaru'));
+        // kirim semua variabel ke view
+        return view('v_halaman', compact('dokumentasi', 'portofolio', 'tentangKami'));
     }
-    
 }

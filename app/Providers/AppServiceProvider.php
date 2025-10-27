@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,13 +17,14 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        // Kirim jumlah pesan dengan status 'Pengaduan' ke semua view
+        // Kirim jumlah dokumentasi berdasarkan jenis ke semua view
         View::composer('*', function ($view) {
-            $jumlahPesanBaru = DB::table('tb_pengaduan')
-                ->where('status', 'Pengaduan')
+            // Contoh: menghitung jumlah dokumentasi dengan jenis 'video'
+            $jumlahDokumentasiVideo = DB::table('tb_dokumentasi')
+                ->where('jenis', 'video')
                 ->count();
 
-            $view->with('jumlahPesanBaru', $jumlahPesanBaru);
+            $view->with('jumlahDokumentasiVideo', $jumlahDokumentasiVideo);
         });
     }
 }
