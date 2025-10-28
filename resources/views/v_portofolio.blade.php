@@ -5,10 +5,19 @@
 
 @section('content')
 <style>
-/* Membuat placeholder tebal */
+/* Placeholder tebal */
 .placeholder-bold::placeholder {
     font-weight: bold;
-    color: #6c757d; /* optional, sama seperti warna placeholder Bootstrap */
+    color: #6c757d;
+}
+
+/* Biar deskripsi kelihatan rapi saat disembunyikan */
+.truncate {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* tampil 2 baris dulu */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>
 
@@ -44,18 +53,37 @@
                     <img src="{{ asset($item->foto_path) }}" class="card-img-top" style="height:220px; object-fit:cover;">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">{{ $item->judul }}</h5>
-                        <p class="card-text">{{ $item->deskripsi }}</p>
-                        <div class="d-flex justify-content-between">
-                            {{-- Tombol Edit --}}
+
+                        {{-- Deskripsi pendek + tombol lihat selengkapnya --}}
+                        <p class="card-text truncate" id="desc-{{ $item->id }}">
+                            {{ $item->deskripsi }}
+                        </p>
+                        <button class="btn btn-link p-0 text-decoration-none" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseDesc{{ $item->id }}"
+                            aria-expanded="false"
+                            aria-controls="collapseDesc{{ $item->id }}">
+                            <i class="fas fa-eye"></i> Lihat Selengkapnya
+                        </button>
+
+                        {{-- Deskripsi penuh --}}
+                        <div class="collapse mt-2" id="collapseDesc{{ $item->id }}">
+                            <div class="card card-body">
+                                {{ $item->deskripsi }}
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-3">
                             <a href="{{ route('portofolio.edit', $item->id) }}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
 
-                            {{-- Tombol Hapus --}}
                             <form action="{{ route('portofolio.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -64,4 +92,7 @@
         @endforeach
     </div>
 </div>
+
+{{-- Script Bootstrap (pastikan ini ada di layout utama juga) --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

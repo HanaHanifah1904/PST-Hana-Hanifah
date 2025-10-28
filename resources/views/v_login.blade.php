@@ -84,6 +84,11 @@
         .text-center small a:hover {
             text-decoration: underline;
         }
+
+        /* Tombol show/hide password */
+        .toggle-password {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -117,6 +122,9 @@
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
                         <input type="password" name="password" class="form-control" id="password" required>
+                        <span class="input-group-text toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </span>
                     </div>
                     @error('password') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
@@ -146,6 +154,7 @@
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
+        // Dark/Light theme toggle
         const toggle = document.getElementById('themeToggle');
         const html = document.documentElement;
         toggle.addEventListener('click', () => {
@@ -156,6 +165,15 @@
                 html.setAttribute('data-theme', 'light');
                 toggle.innerHTML = '<i class="fas fa-moon"></i>';
             }
+        });
+
+        // Show/Hide password
+        const passwordField = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        togglePassword.addEventListener('click', () => {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            togglePassword.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
         });
     </script>
 </body>
